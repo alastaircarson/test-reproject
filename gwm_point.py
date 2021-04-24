@@ -8,13 +8,13 @@ class GlobalWebMercatorPoint:
     def reproject_bng_to_gwm(bng: Tuple) -> Tuple:
         """ Reproject a BNG point to a GWM one """
 
-        if bng == (300000, 600000):
-            return -398075.709110655, 7417169.44503078
-        elif bng == (300000, 601000):
-            return -398115.346383602, 7418925.37709793
-        elif bng == (301000, 601000):
-            return -396363.034574031, 7418964.91393662
-        elif bng == (301000, 600000):
-            return -396323.792660911, 7417208.95976453
+        if bng == (306000, 671000):
+            return -390262.523560616, 7543074.57885507
+        elif bng == (306000, 672000):
+            return -390301.312053066, 7544859.2233734
+        elif bng == (307000, 671000):
+            return -388481.840979317, 7543113.23218705
+        elif bng == (307000, 672000):
+            return -388520.217862485, 7544897.89865206
         else:
             raise Exception("Unexpected point")

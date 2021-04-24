@@ -8,7 +8,7 @@ class GlobalWebMercatorImageReprojection:
     def __init__(self, mosaic: TileMosaic, box: GlobalWebMercatorBox):
         self.mosaic = mosaic
         self.box = box
-        self.test = [(0, 0), (400, 0), (400, 400), (0, 400)]
+        self.test = [(0, 0), (600, 0), (600, 600), (0, 600)]
         self._create_transformation()
         self._apply_transformation()
 
@@ -17,7 +17,7 @@ class GlobalWebMercatorImageReprojection:
         bng_img_to_gwm_image = PositionTransform()
         # Translate/scale image px to BNG
         bng_img_to_gwm_image = bng_img_to_gwm_image.combine(HorizontalFlip())
-        bng_img_to_gwm_image = bng_img_to_gwm_image.combine(Scale(1/self.box.bng_res))
+        bng_img_to_gwm_image = bng_img_to_gwm_image.combine(Scale(self.box.bng_res))
         bng_img_to_gwm_image = bng_img_to_gwm_image.combine(Shift(self.box.bng_bbox[0], self.box.bng_bbox[3]))
         self._test_coords(self.test, bng_img_to_gwm_image)
 
@@ -49,8 +49,14 @@ class GlobalWebMercatorImageReprojection:
         """ Get the PIL transform tuple from a 3x3 matrix """
         return pt.matrix[0][0], pt.matrix[1][0], pt.matrix[2][0], pt.matrix[0][1], pt.matrix[1][1], pt.matrix[2][1]
 
-    def save(self, filename:str):
+    def save(self, filename: str):
         self.bng_result.save(filename)
+
+    def save_world_file(self, filename: str):
+        # world file is res, 0, 0, -res, left, top
+        contents = f"{self.box.bng_res}\n0.0\n0.0\n{-self.box.bng_res}\n{self.box.bng_bbox[0]}\n{self.box.bng_bbox[3]}"
+        with open(filename, "w") as wf:
+            wf.write(contents)
 
     @staticmethod
     def _test_coords(coords, transform):

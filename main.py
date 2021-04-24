@@ -6,7 +6,7 @@ from gwm_image_reprojection import GlobalWebMercatorImageReprojection
 
 def main():
     # Sample coordinates to avoid caring about the transformation just now
-    bng_bbox = [300000, 600000, 301000, 601000]
+    bng_bbox = [306000, 671000, 307000, 672000]
     bng_map_size = (600, 600)
     tile_requester = OSMTileRequester()
 
@@ -32,6 +32,7 @@ def main():
 
     reprojection = GlobalWebMercatorImageReprojection(gwm_mosaic, gwm_box)
     reprojection.save("bng.png")
+    reprojection.save_world_file("bng.pngw")
 
 
 if __name__ == "__main__":

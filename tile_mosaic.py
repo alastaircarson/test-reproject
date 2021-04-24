@@ -26,6 +26,7 @@ class TileMosaic:
             for y in range(0, h):
                 tile_url = self._request_tile(zoom, start_x + x, start_y + y)
                 tile = Image.open(requests.get(tile_url, stream=True).raw)
+                # tile.save(f"t{x}{y}.png")
                 self.image.paste(tile, (x * self.TILE_SIZE, y * self.TILE_SIZE))
                 tile_bbox = gwm.TileBounds(start_x + x, start_y + y, zoom)
                 if first:
